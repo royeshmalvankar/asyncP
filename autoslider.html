@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #b2{
+    /* border: 1px solid red; */
+    margin: auto;
+    margin-top: 300px;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    }
+    #b2>div{
+        /* border: 1px solid blue; */
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #b2>button{
+    background-color: transparent;
+    border-color: gray;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    align-content: center;
+    border-style:groove;
+    }
+    img{
+        width: 370px;
+        height: 200px;
+        border-radius: 10px;
+    }
+    #start{
+        cursor: pointer;
+        font-size: 18px;
+        background-color:white;
+        border: none;
+        padding: 10px;
+        color: green;;
+        text-align: center;
+        border-radius: 8px;
+        width: 200px ;
+        transition: 0.04s ;      
+    }
+    #start:hover{
+        background-color: #77eaa3;
+        color: green;
+    }
+    #stop{
+        cursor: pointer;
+        font-size: 14px;
+        background-color: white;
+        border: none;
+        padding: 10px;
+        color: #ed0331;;
+        text-align: center;
+        border-radius: 8px;
+        width: 200px ;
+        transition: 0.04s ;
+    }
+    #stop:hover{
+        background-color: #ffe0eb;
+        color: #ed0331;
+    }
+    #bts{
+        margin-top: 20px;
+        height: 100px;
+        width: 100%;
+        /* border: 1px solid red; */
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<body>
+    <div id="b2">
+        <button id="prev"> < </button>
+        <div id="im1">
+            <img src="" alt="">
+        </div>
+        <div id="im2">
+            <img src="" alt="">
+        </div>
+        <div id="im3">
+            <img src="" alt="">
+        </div>
+        <div id="im4">
+            <img src="" alt="">
+        </div>
+        <div id="im5">
+            <img src="" alt="">
+        </div>
+        <button id="nex"> > </button>
+    </div>   
+    <div id="bts">
+        <button id="start">slide start</button>
+        <button id="stop">slide stop</button>
+        <!-- <button id="strop">slide show</button> -->
+    </div>
+</body>
+<script>
+    let imgsld=[
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/home-screen/1678454437383-aa4984.jpeg",
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1693574670466-aba837.jpeg",
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1688127325421-d1c680.jpeg",
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1681110360042-dcfde0.jpeg",
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/home-screen/1678463309015-2b92d2.jpeg",
+        "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_394,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1699859892789-978a14.jpeg",
+        "https://plus.unsplash.com/premium_photo-1661353245572-5e41f6208de8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2xpZGVyfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1460648304944-4883b5cfcee5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2xpZGVyfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1674641194949-e154719cdc02?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2xpZGVyfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1554941426-e9604e34bc94?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2xpZGVyfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1532716303749-62ba9821e104?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c2xpZGVyfGVufDB8fDB8fHww",
+        "https://images.unsplash.com/photo-1593016250787-edf25b355001?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNsaWRlcnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1505653553729-d8366e1e7c9e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNsaWRlcnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1554941080-989773d063e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNsaWRlcnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.unsplash.com/photo-1456418047667-56bcd35b1a88?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNsaWRlcnxlbnwwfHwwfHx8MA%3D%3D",
+        "https://images.pexels.com/photos/14933214/pexels-photo-14933214.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "https://images.pexels.com/photos/14650674/pexels-photo-14650674.jpeg?auto=compress&cs=tinysrgb&w=300",
+        "https://images.pexels.com/photos/6128397/pexels-photo-6128397.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/15548954/pexels-photo-15548954/free-photo-of-the-back-of-a-smartphone-with-a-colorful-light.jpeg?auto=compress&cs=tinysrgb&w=300",
+        "https://images.pexels.com/photos/9992330/pexels-photo-9992330.jpeg?auto=compress&cs=tinysrgb&w=1600"
+    ];
+    
+    let pre = document.getElementById('prev');
+    let next =document.getElementById('nex');
+    let image =document.querySelector('#im1>img');
+    let image1 =document.querySelector('#im2>img');
+    let image2 =document.querySelector('#im3>img');
+    let image3 =document.querySelector('#im4>img');
+    let image4 =document.querySelector('#im5>img');
+    let st = document.getElementById('start')
+    let op =document.getElementById('stop')
+    let st_op= document.getElementById('strop')
+    let currim1 =0;
+    let currim2 =1;
+    let currim3 =2;
+    let currim4 =3;
+    let currim5 =4;
+
+    image.setAttribute('src',imgsld[currim1])
+    image1.setAttribute('src',imgsld[currim2])
+    image2.setAttribute('src',imgsld[currim3])
+    image3.setAttribute('src',imgsld[currim4])
+    image4.setAttribute('src',imgsld[currim5])
+
+    // clicked=false
+    // st_op.addEventListener('click',function() 
+    // {
+    //     console.log(clicked);
+    //     if(clicked===false)
+    //     { 
+    //         clicked=true;
+    //     autoimg= setInterval(()=>{
+    //     currim1++
+    //     currim2++
+    //     currim3++
+    //     currim4++
+    //     currim5++
+    //     if(currim1>imgsld.length-5 )
+    //     {
+    //         currim1= 0;
+    //         currim2= 1;
+    //         currim3= 2;
+    //         currim4= 3;
+    //         currim5= 4;
+    //     }
+    //     image.setAttribute('src',imgsld[currim1])
+    //     image1.setAttribute('src',imgsld[currim2])
+    //     image2.setAttribute('src',imgsld[currim3])
+    //     image3.setAttribute('src',imgsld[currim4])
+    //     image4.setAttribute('src',imgsld[currim5])
+    //     console.log(image,image1,image2,image3,image4)
+    //     console.log(currim1,currim2,currim3,currim4,currim5)
+    // },2000) 
+    //     }
+    //     else
+    //     {
+    //         clicked=false;
+    //         clearInterval(autoimg)
+    //     }
+    // })
+
+        autoimg= setInterval(()=>{
+        currim1++
+        currim2++
+        currim3++
+        currim4++
+        currim5++
+        if(currim1>imgsld.length-5 )
+        {
+            currim1= 0;
+            currim2= 1;
+            currim3= 2;
+            currim4= 3;
+            currim5= 4;
+        }
+        image.setAttribute('src',imgsld[currim1])
+        image1.setAttribute('src',imgsld[currim2])
+        image2.setAttribute('src',imgsld[currim3])
+        image3.setAttribute('src',imgsld[currim4])
+        image4.setAttribute('src',imgsld[currim5])
+        console.log(image,image1,image2,image3,image4)
+        console.log(currim1,currim2,currim3,currim4,currim5)
+    },2000)
+    
+    st.addEventListener('click',function(){
+        autoimg= setInterval(()=>{
+        currim1++
+        currim2++
+        currim3++
+        currim4++
+        currim5++
+        if(currim1>imgsld.length-5 )
+        {
+            currim1= 0;
+            currim2= 1;
+            currim3= 2;
+            currim4= 3;
+            currim5= 4;
+        }
+        image.setAttribute('src',imgsld[currim1])
+        image1.setAttribute('src',imgsld[currim2])
+        image2.setAttribute('src',imgsld[currim3])
+        image3.setAttribute('src',imgsld[currim4])
+        image4.setAttribute('src',imgsld[currim5])
+        console.log(image,image1,image2,image3,image4)
+        console.log(currim1,currim2,currim3,currim4,currim5)
+    },2000)
+    })
+
+    op.addEventListener('click',function(){
+      clearInterval(autoimg)  
+    })
+
+    pre.addEventListener('click',function()
+    {
+        clearInterval(autoimg)
+        currim1--
+        currim2--
+        currim3--
+        currim4--
+        currim5--
+        if(currim5<0)
+        {
+            currim1= imgsld.length -1;
+            currim2= imgsld.length -2;
+            currim3= imgsld.length -3;
+            currim4= imgsld.length -4;
+            currim5= imgsld.length -5;
+        }
+    
+    
+        image.setAttribute('src',imgsld[currim1])
+        image1.setAttribute('src',imgsld[currim2])
+        image2.setAttribute('src',imgsld[currim3])
+        image3.setAttribute('src',imgsld[currim4])
+        image4.setAttribute('src',imgsld[currim5])
+        console.log(image,image1,image2,image3,image4)
+        console.log(currim1,currim2,currim3,currim4,currim5)
+        clicked=true;
+    })
+    
+    next.addEventListener('click',function()
+    {
+        
+        clearInterval(autoimg)
+        currim1++
+        currim2++
+        currim3++
+        currim4++
+        currim5++
+        if(currim1>imgsld.length-5 )
+        {
+            currim1= 0;
+            currim2= 1;
+            currim3= 2;
+            currim4= 3;
+            currim5= 4;
+        }
+     
+    
+        image.setAttribute('src',imgsld[currim1])
+        image1.setAttribute('src',imgsld[currim2])
+        image2.setAttribute('src',imgsld[currim3])
+        image3.setAttribute('src',imgsld[currim4])
+        image4.setAttribute('src',imgsld[currim5])
+        console.log(image,image1,image2,image3,image4)
+        console.log(currim1,currim2,currim3,currim4,currim5)
+        clicked=true;
+    })
+    
+    </script>
+</html>
